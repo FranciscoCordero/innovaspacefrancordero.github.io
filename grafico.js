@@ -78,5 +78,5 @@ function addData(myChart, label, color, color, data){
 function addDates(x){
   myChart.config.data.labels.push(x);
   myChart.update();
-}
+
 
