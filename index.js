@@ -7,15 +7,15 @@ const influxORG = "c06759430ed2b65d";
 const queryAPI = new InfluxDB({ url, token }).getQueryApi(influxORG);
 
 function getMeasurements() {
-    const query = `import \"influxdata/influxdb/schema\" schema.measurements(bucket: \"${influxBucket}\")`
+    const query = `import \"influxdata/influxdb/schema\" schema.measurements(bucket: \"${influxBucket}\")`                   /* Function to get Measurements */
     fillListWithData('_m-list', query);
 };
 
 function getSelectedMeasurements() {
     clearList('#_f-list');
-    const measurement_ = $("#_m-list").val();
+    const measurement_ = $("#_m-list").val();                                                                                 /* Function to get Fields */
     var query =
-            `import \"influxdata/influxdb/schema\"
+            `import \"influxdata/influxdb/schema\"                                                                              
         schema.measurementFieldKeys(bucket: \"${influxBucket}\",
         measurement: \"${measurement_}\")
         |> yield(name: \"${measurement_}\")`
@@ -23,8 +23,8 @@ function getSelectedMeasurements() {
 
 }
 
-function fillListWithData(list_, query) {
-    var list = document.getElementById(list_.toString()),
+function fillListWithData(list_, query) {                                                                           
+    var list = document.getElementById(list_.toString()),                                                                   /* Function to create Fields list */
         option,
         result = [];
 
@@ -47,7 +47,7 @@ function fillListWithData(list_, query) {
 }
 async function getData() {
     var results_ = [];
-    var startDate = (new Date(document.getElementById("datepicker1").value).valueOf()) / 1000,
+    var startDate = (new Date(document.getElementById("datepicker1").value).valueOf()) / 1000,                      /* Function to get Graph Data */
         endDate = (new Date(document.getElementById("datepicker2").value).valueOf()) / 1000;
     var selectedMeasurements = $("#_m-list").val();
     var selectedFields = $("#_f-list").val();
@@ -84,7 +84,7 @@ function getGraphData(query) {
 };
 
 async function listsPush() {
-    var lists = $("#_f-list").val();
+    var lists = $("#_f-list").val();                                                                                /* Function to push Labels and Data to the Graph */
     await getData()
     .then( (result) => {
         for (let i = 0; i < lists.length; i++) {
@@ -94,7 +94,7 @@ async function listsPush() {
 }
 
 function datesPush(){
-    var dates = [];
+    var dates = [];                                                                                                /* Function to push dates to the Graph */
     var startDate = new Date(document.getElementById("datepicker1").value),
         endDate = new Date(document.getElementById("datepicker2").value);
 
@@ -112,9 +112,18 @@ function scrollToView(){
     graph.scrollIntoView();
 }
 
+function chartReset(){
+    myChart.destroy();
+}
+
+function render(){
+    myChart = new Chart(document.getElementById('myChart'),config);
+}
 
 window.addEventListener('load', getMeasurements); 
 document.getElementById('_m-list').addEventListener('click', getSelectedMeasurements);
 document.getElementById('btnPopup').addEventListener('click', listsPush);
 document.getElementById('btnPopup').addEventListener('click', datesPush);
 document.getElementById('btnPopup').addEventListener('click', scrollToView);
+document.getElementById('btnPopup').addEventListener('click', chartReset);
+document.getElementById('btnPopup').addEventListener('click', render);
