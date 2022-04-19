@@ -1,9 +1,9 @@
 import { InfluxDB } from 'https://unpkg.com/@influxdata/influxdb-client/dist/index.browser.mjs';
 
-const url = "https://us-east-1-1.aws.cloud2.influxdata.com/";
-const token = "JQnVtuHilTpq3vvtOKjOeWDwNLPvLYZR0zUJjyzZvoJtDAxUzm1TySE6k6jf2EDItP1AHNqWF9jXd7r7OdfwuA==";
+const url = "https://us-east-1-1.aws.cloud2.influxdata.com";
+const token = "M-6re7Lt3UZM6juFPHnewKleXVmFQca55Sf5JwEq9BeY9_epkb9fjz6F6wbJWhe8T5eVph9_ttqTezvHO3TlWQ==";
 const influxBucket = "telemetria";
-const influxORG = "c06759430ed2b65d";
+const influxORG = "innova.groundstation@gmail.com";
 const queryAPI = new InfluxDB({ url, token }).getQueryApi(influxORG);
 
 function getMeasurements() {
